@@ -19,35 +19,45 @@ public class Window {
 	public static final int PUBG_ID = 5;
 	public static final int CS_ID = 6;
 	
-	private String windowTitle = "Notifier!";
+	private final String lolName = "League of Legends";
+	private final String owName = "Overwatch";
+	private final String rlName = "Rocket League";
+	private final String mcName = "Minecraft";
+	private final String pubgName = "PUBG";
+	private final String csName = "Counter-Strike: GO";
+	
+	private String windowTitle = "Notifier v2.0";
 	private JFrame frame;
 	private JPanel panel;
 	
 	private JButton start = new JButton("Start");
-	private JButton cancel = new JButton("Cancel");
+	private JButton cancel = new JButton("Exit");
 	
-	private JButton lol = new JButton("League of Legends");
-	private JButton ow = new JButton("Overwatch");
-	private JButton rl = new JButton("Rocket League");
-	private JButton mc = new JButton("Minecraft");
-	private JButton pubg = new JButton("PUBG");
-	private JButton cs = new JButton("Counter Strike GO");
+	private JButton lol = new JButton(lolName);
+	private JButton ow = new JButton(owName);
+	private JButton rl = new JButton(rlName);
+	private JButton mc = new JButton(mcName);
+	private JButton pubg = new JButton(pubgName);
+	private JButton cs = new JButton(csName);
 	
-	private int id;
+	private int id, lastID;
 	private String reminder;
+	private Check check;
 	
 	public Window() {
+		panel = new JPanel(new FlowLayout());
+		panel.setBackground(new Color(128, 64, 255));
+		
 		frame = new JFrame(windowTitle);
-		frame.setSize(800, 600);
+		frame.setSize(340, 128);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
 		
-		panel = new JPanel(new FlowLayout());
-		panel.setBackground(new Color(128, 64, 255));
-		
+		cancel.setEnabled(true);
 		enableAllButtons();
+		
 		panel.add(start);
 		panel.add(lol);
 		panel.add(ow);
@@ -89,32 +99,65 @@ public class Window {
 		});
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//start thread ask for reminder and go invi
-				reminder = JOptionPane.showInputDialog("Reminder: ");
-				frame.setVisible(false);
-				Check check = new Check();
-				check.start(id);
-				frame.setVisible(true);
-				if(reminder.equals("")) {
-					JOptionPane.showMessageDialog(null, "Reminding you!");
-				}else {
-					JOptionPane.showMessageDialog(null, reminder);
-				}
-				enableAllButtons();
+				begin();
 			}
 		});
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deselect();
+				if(id == -1) {
+					System.exit(0);
+				} else {
+					enableAllButtons();
+				}
 			}
 		});
 		
 		frame.setVisible(true);
 	}
 	
+	private void begin() {
+		lastID = id;
+		reminder = JOptionPane.showInputDialog("Reminder: ");
+		if(reminder == null) {
+			reminder = "";
+			return;
+		}
+		frame.setVisible(false);
+		
+		check = new Check(id);
+		check.start();
+		check = null;
+		
+		frame.setVisible(true);
+		if(reminder.equals("")) {
+			JOptionPane.showMessageDialog(null, "Reminding you, becasue you ended " + getName());
+		} else {
+			JOptionPane.showMessageDialog(null, reminder);
+		}
+		enableAllButtons();
+	}
+	
+	private String getName() {
+		switch(lastID) {
+			case LOL_ID:
+				return lolName;
+			case OW_ID:
+				return owName;
+			case RL_ID:
+				return rlName;
+			case MC_ID:
+				return mcName;
+			case PUBG_ID:
+				return pubgName;
+			case CS_ID:
+				return csName;
+			default:
+				return "Error getting name";
+		}
+	}
+	
 	private void select(int id) {
 		start.setEnabled(true);
-		cancel.setEnabled(true);
 		
 		lol.setEnabled(true);
 		ow.setEnabled(true);
@@ -144,6 +187,8 @@ public class Window {
 				break;
 		}
 		
+		cancel.setText("Cancel");
+		
 		this.id = id;
 	}
 	
@@ -156,15 +201,11 @@ public class Window {
 		cs.setEnabled(true);
 		
 		start.setEnabled(false);
-		cancel.setEnabled(false);
 		
 		reminder = "";
 		id = -1;
+		lastID = -1;
+		cancel.setText("Exit");
 	}
 	
-	private void deselect() {
-		id = -1;
-		enableAllButtons();
-	}
-
 }
