@@ -18,6 +18,7 @@ public class Window {
 	public static final int MC_ID = 4;
 	public static final int PUBG_ID = 5;
 	public static final int CS_ID = 6;
+	public static final int DOTA_ID = 7;
 	
 	private final String lolName = "League of Legends";
 	private final String owName = "Overwatch";
@@ -25,6 +26,7 @@ public class Window {
 	private final String mcName = "Minecraft";
 	private final String pubgName = "PUBG";
 	private final String csName = "Counter-Strike: GO";
+	private final String dotaName = "Dota 2";
 	
 	private String windowTitle = "Notifier v2.0";
 	private JFrame frame;
@@ -39,6 +41,7 @@ public class Window {
 	private JButton mc = new JButton(mcName);
 	private JButton pubg = new JButton(pubgName);
 	private JButton cs = new JButton(csName);
+	private JButton dota = new JButton(dotaName);
 	
 	private int id, lastID;
 	private String reminder;
@@ -49,7 +52,7 @@ public class Window {
 		panel.setBackground(new Color(128, 64, 255));
 		
 		frame = new JFrame(windowTitle);
-		frame.setSize(340, 128);
+		frame.setSize(340, 140);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,6 +68,7 @@ public class Window {
 		panel.add(mc);
 		panel.add(pubg);
 		panel.add(cs);
+		panel.add(dota);
 		panel.add(cancel);
 		
 		lol.addActionListener(new ActionListener() {
@@ -95,6 +99,11 @@ public class Window {
 		cs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				select(CS_ID);
+			}
+		});
+		dota.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				select(DOTA_ID);
 			}
 		});
 		start.addActionListener(new ActionListener() {
@@ -151,6 +160,8 @@ public class Window {
 				return pubgName;
 			case CS_ID:
 				return csName;
+			case DOTA_ID:
+				return dotaName;
 			default:
 				return "Error getting name";
 		}
@@ -199,7 +210,7 @@ public class Window {
 		mc.setEnabled(true);
 		pubg.setEnabled(true);
 		cs.setEnabled(true);
-		
+		dota.setEnabled(true);
 		start.setEnabled(false);
 		
 		reminder = "";

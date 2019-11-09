@@ -72,6 +72,9 @@ public class Check {
 				case Window.CS_ID:
 					if(s.contains("csgo.exe")) isActive[counter] = true;
 					break;
+				case Window.DOTA_ID:
+					if(s.contains("dota2.exe")) isActive[counter] = true;
+					break;
 				}
 				counter++;
 			}
