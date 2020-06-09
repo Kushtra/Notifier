@@ -15,6 +15,7 @@ public class Window {
     private final double VERSION = 2.3;
     private final String windowTitle = "Notifier v" + VERSION;
     private final int numberOfApps = 7;
+    private final int NONE = -1;
 
     private JFrame frame;
     private JPanel panel;
@@ -45,10 +46,8 @@ public class Window {
         buttons[3] = new JButton("Minecraft");
         buttons[4] = new JButton("PUBG");
         buttons[5] = new JButton("Counter-Strike: GO");
-        buttons[6] = new JButton("Dota 2");
+        buttons[6] = new JButton("dota2.exe");
 
-        start.setName("start");
-        cancel.setName("cancel");
         buttons[0].setName("League of Legends.exe");
         buttons[1].setName("overwatch.exe");
         buttons[2].setName("rocketleague.exe");
@@ -72,7 +71,7 @@ public class Window {
         });
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(selected == -1) {
+                if(selected == NONE) {
                     System.exit(0);
                 } else {
                     reset();
@@ -102,7 +101,7 @@ public class Window {
         frame.setVisible(true);
 
         if(reminder.equals("")) {
-            JOptionPane.showMessageDialog(null, "Remiding you, because " + buttons[selected].getText() + " has been shutdown!");
+            JOptionPane.showMessageDialog(null, "Reminding you, because " + buttons[selected].getText() + " has been shutdown!");
         } else {
             JOptionPane.showMessageDialog(null, reminder);
         }
@@ -131,7 +130,7 @@ public class Window {
         start.setEnabled(false);
 
         reminder = "";
-        selected = -1;
+        selected = NONE;
         cancel.setText("Exit");
     }
 
