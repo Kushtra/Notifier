@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Window {
+	
+	private final double VERSION = 2.2;
 
 	public static final int LOL_ID = 1;
 	public static final int OW_ID = 2;
@@ -28,7 +30,7 @@ public class Window {
 	private final String csName = "Counter-Strike: GO";
 	private final String dotaName = "Dota 2";
 	
-	private String windowTitle = "Notifier v2.0";
+	private String windowTitle = "Notifier v" + VERSION;
 	private JFrame frame;
 	private JPanel panel;
 	
@@ -129,13 +131,11 @@ public class Window {
 		reminder = JOptionPane.showInputDialog("Reminder: ");
 		if(reminder == null) {
 			reminder = "";
-			return;
 		}
 		frame.setVisible(false);
 		
 		check = new Check(id);
 		check.start();
-		check = null;
 		
 		frame.setVisible(true);
 		if(reminder.equals("")) {

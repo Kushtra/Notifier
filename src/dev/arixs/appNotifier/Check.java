@@ -2,16 +2,39 @@ package dev.arixs.appNotifier;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Check {
 
+	private String app;
 	private int id;
 	private boolean running;
+	private boolean done;
 	
 	public Check(int id) {
 		this.id = id;
+		switch(this.id) {
+			case 1:
+				app = "league of legends.exe";
+				break;
+			case 2:
+				app = "overwatch.exe";
+				break;
+			case 3:
+				app = "rocketleague.exe";
+				break;
+			case 4:
+				app = "javaw.exe";
+				break;
+			case 5:
+				app = "tslgame.exe";
+				break;
+			case 6:
+				app = "csgo.exe";
+				break;
+			case 7:
+				app = "dota2.exe";
+				break;
+		}
 	}
 	
 	public synchronized void start() {
@@ -26,7 +49,6 @@ public class Check {
 			now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;
 			lastTime = now;
-			//maybe put if insted of while
 			while(delta >= 1) {
 				tick();
 				delta--;
@@ -35,57 +57,23 @@ public class Check {
 	}
 	
 	private void tick() {
-		doCheck();
-	}
-	
-	private void doCheck() {
 		try {
-			String buffer;
 			Process p = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\"+"tasklist.exe");
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			List<String> allProcess = new ArrayList<String>();
-			while((buffer = input.readLine()) != null) {
-				String nameCheck = buffer.toString();
-				allProcess.add(nameCheck);
-			}
-			input.close();
+			String buffer = "";
+			done = true;
 			
-			int counter = 0;
-			boolean[] isActive = new boolean[allProcess.size()];
-			for(String s: allProcess) {
-				switch(id) {
-				case Window.LOL_ID:
-					if(s.equalsIgnoreCase("league of legends.exe")) isActive[counter] = true;
-					break;
-				case Window.OW_ID:
-					if(s.equalsIgnoreCase("overwatch.exe")) isActive[counter] = true;
-					break;
-				case Window.RL_ID:
-					if(s.equalsIgnoreCase("rocketleague.exe")) isActive[counter] = true;
-					break;
-				case Window.MC_ID:
-					if(s.equalsIgnoreCase("javaw.exe")) isActive[counter] = true;
-					break;
-				case Window.PUBG_ID:
-					if(s.equalsIgnoreCase("tslgame.exe")) isActive[counter] = true;
-					break;
-				case Window.CS_ID:
-					if(s.contains("csgo.exe")) isActive[counter] = true;
-					break;
-				case Window.DOTA_ID:
-					if(s.contains("dota2.exe")) isActive[counter] = true;
+			while((buffer = input.readLine()) != null) {
+				if(buffer.contains(app)) {
+					done = false;
 					break;
 				}
-				counter++;
-			}
-
-			int booleanCounter = 0;
-			for(boolean b: isActive) {
-				if(b) booleanCounter++;
 			}
 			
-			if(booleanCounter == 0) running = false;
-		} catch(Exception e) {
+			if(done) {
+				running = false;
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
