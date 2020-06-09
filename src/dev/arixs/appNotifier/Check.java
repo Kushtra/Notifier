@@ -6,35 +6,11 @@ import java.io.InputStreamReader;
 public class Check {
 
 	private String app;
-	private int id;
 	private boolean running;
 	private boolean done;
 	
-	public Check(int id) {
-		this.id = id;
-		switch(this.id) {
-			case 1:
-				app = "league of legends.exe";
-				break;
-			case 2:
-				app = "overwatch.exe";
-				break;
-			case 3:
-				app = "rocketleague.exe";
-				break;
-			case 4:
-				app = "javaw.exe";
-				break;
-			case 5:
-				app = "tslgame.exe";
-				break;
-			case 6:
-				app = "csgo.exe";
-				break;
-			case 7:
-				app = "dota2.exe";
-				break;
-		}
+	public Check(String task) {
+		this.app = task;
 	}
 	
 	public synchronized void start() {
@@ -42,7 +18,7 @@ public class Check {
 		long now;
 		long lastTime = System.nanoTime();
 		double delta = 0;
-		double fps = 2.0;
+		double fps = 1.0;
 		double timePerTick = 1000000000 / fps;
 		
 		while(running) {
