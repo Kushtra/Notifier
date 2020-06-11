@@ -46,7 +46,7 @@ public class Window {
         buttons[3] = new JButton("Minecraft");
         buttons[4] = new JButton("PUBG");
         buttons[5] = new JButton("Counter-Strike: GO");
-        buttons[6] = new JButton("dota2.exe");
+        buttons[6] = new JButton("Dota 2");
 
         buttons[0].setName("League of Legends.exe");
         buttons[1].setName("overwatch.exe");
