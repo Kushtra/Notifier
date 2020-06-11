@@ -31,6 +31,23 @@ public class Check {
 			}
 		}
 	}
+
+	private int getUsage(String task) {
+		if(task == "League of Legends.exe") return -1;
+
+		char[] arr = task.toCharArray();
+		String storage = "";
+		int finale = -1;
+
+		for(int i=0;i<arr.length;i++) {
+			if(i >= arr.length - 9) {
+				if(arr[i] != '.' && arr[i] != ' ' && arr[i] != 'K') storage += arr[i];
+			}
+		}		
+		finale = Integer.parseInt(storage);
+
+		return finale;
+	}
 	
 	private void tick() {
 		try {
@@ -42,6 +59,10 @@ public class Check {
 			while((buffer = input.readLine()) != null) {
 				if(buffer.contains(app)) {
 					done = false;
+					System.out.print("RAM used: " + getUsage(buffer) + " ");
+					if(getUsage(buffer) == -1 || getUsage(buffer) < 150000) {
+						
+					}
 					break;
 				}
 			}

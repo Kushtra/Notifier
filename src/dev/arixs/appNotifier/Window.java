@@ -14,7 +14,7 @@ public class Window {
 
     private final double VERSION = 2.3;
     private final String windowTitle = "Notifier v" + VERSION;
-    private final int numberOfApps = 7;
+    private final int numberOfApps = 8;
     private final int NONE = -1;
 
     private JFrame frame;
@@ -32,7 +32,7 @@ public class Window {
         panel.setBackground(new Color(128, 64, 255));
 
         frame = new JFrame(windowTitle);
-        frame.setSize(340, 140);
+        frame.setSize(360, 160);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,7 +46,8 @@ public class Window {
         buttons[3] = new JButton("Minecraft");
         buttons[4] = new JButton("PUBG");
         buttons[5] = new JButton("Counter-Strike: GO");
-        buttons[6] = new JButton("dota2.exe");
+        buttons[6] = new JButton("Dota 2");
+        buttons[7] = new JButton("Notepad");
 
         buttons[0].setName("League of Legends.exe");
         buttons[1].setName("overwatch.exe");
@@ -55,6 +56,7 @@ public class Window {
         buttons[4].setName("tslgame.exe");
         buttons[5].setName("csgo.exe");
         buttons[6].setName("dota2.exe");
+        buttons[7].setName("notepad.exe");
 
         start.setEnabled(false);
 
